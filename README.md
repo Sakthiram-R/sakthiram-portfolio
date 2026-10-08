@@ -11,7 +11,17 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000. Production: `npm run build`. This project exports a deployable static site to `out/`; serve that directory with any static host. For a local production preview with compression, caching and video byte-range support, run `node scripts/serve.mjs` and open http://localhost:3002. `npm run lint` checks TypeScript. For social sharing, set `NEXT_PUBLIC_SITE_URL` to your actual production origin before building; this enables the absolute `og.jpg` metadata without inventing a domain.
+Open http://localhost:3000. Production: `npm run build`. This project exports a deployable static site to `out/`; serve that directory with any static host. For a local production preview with compression, caching and video byte-range support, run `node scripts/serve.mjs` and open http://localhost:3002/sakthiram-portfolio/. `npm run lint` checks TypeScript. For social sharing, set `NEXT_PUBLIC_SITE_URL` to your actual production origin before building; this enables the absolute `og.jpg` metadata without inventing a domain.
+
+## GitHub Pages assets
+
+The production base path is defined once in `src/lib/base-path.mjs` and shared by Next.js, `src/lib/asset.ts`, and the preview server. Development stays at http://localhost:3000/ with no prefix. Production exports to `out/` and is served at https://sakthiram-r.github.io/sakthiram-portfolio/.
+
+Use `asset('/path/to/file')` for files in `public/`, including image/video sources, posters, downloads, metadata, preloads and dynamically generated logo paths. Omit `public/` from URLs. The helper accepts paths without a leading slash, preserves queries/fragments, leaves external/data/blob URLs alone, and avoids adding the base path twice. For future inline CSS backgrounds, use `backgroundImage: 'url(' + asset('/image.webp') + ')'`; standalone CSS should use bundled relative imports so Next.js rewrites the emitted URLs. Locally imported fonts continue through `next/font/local` with Next.js-generated paths. The existing `assetPrefix` handles framework assets; it does not rewrite public file URLs.
+
+Set `NEXT_PUBLIC_SITE_URL=https://sakthiram-r.github.io/sakthiram-portfolio/` before building to emit the absolute Open Graph image URL. Both an origin-only URL and the complete site URL work; the shared asset helper supplies the repository subpath. Without this variable, the existing conditional OG image behavior is preserved.
+
+After building, run `npm start` and `node scripts/qa-assets.mjs` to check all public files byte-for-byte, exported copies, browser images, dynamic logos, local fonts, video playback/sound, metadata and the resume download under the production subpath. Run the same asset QA against development with `QA_URL=http://localhost:3000/`. The server deliberately rejects unprefixed asset requests so broken production URLs cannot pass unnoticed. Run the existing interaction QA with `QA_URL=http://localhost:3002/sakthiram-portfolio/ node scripts/qa.mjs` (set the environment variable using your shell's syntax).
 
 ## Content and provenance
 
@@ -57,4 +67,4 @@ Portrait, video and social image are derived only from the user-supplied intro f
 
 ## Verification
 
-`npm run build` performs production compilation and TypeScript validation. `node scripts/qa.mjs` checks viewports 1440×900, 390×844, 360×800 and 1920×1080 against the running development server. Set `QA_URL=http://localhost:3002` to test the production preview instead. It saves desktop/mobile screenshots, runtime errors, overflow checks and interaction results in `qa/`. It requires a local Chrome installation (change the Playwright channel if necessary). Lighthouse reports and final verification notes live in `QA.md`.
+`npm run build` performs production compilation and TypeScript validation. `node scripts/qa.mjs` checks viewports 1440×900, 390×844, 360×800 and 1920×1080 against the running development server. Set `QA_URL=http://localhost:3002/sakthiram-portfolio/` to test the production preview instead. It saves desktop/mobile screenshots, runtime errors, overflow checks and interaction results in `qa/`. It requires a local Chrome installation (change the Playwright channel if necessary). Lighthouse reports and final verification notes live in `QA.md`.

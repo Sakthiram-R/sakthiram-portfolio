@@ -17,3 +17,13 @@
 Sites registration returned a connector transport error before an identity or publication URL was available. No public deployment is claimed. The full source and local production preview remain available. Set the real deployment origin in `NEXT_PUBLIC_SITE_URL` to enable absolute social-image metadata when hosting.
 
 The loop uses a requested 0.5-second overlap of speech. The continuity checks establish frame/sample alignment; speech phrasing and the sound of overlapping words remain a subjective review of the supplied recording.
+
+
+## GitHub Pages asset verification (2026-10-08)
+
+- Production build passed with NEXT_PUBLIC_SITE_URL=https://sakthiram-r.github.io/sakthiram-portfolio/. Static export and unoptimized images are preserved.
+- All 20 public files were fetched byte-for-byte through /sakthiram-portfolio/ and matched out/; four bundled WOFF2 fonts loaded through prefixed Next.js URLs.
+- Production asset QA passed: portrait, poster, dynamic logos, favicon, preloads, video playback, sound toggle and Resume.pdf download; no console errors or failed asset responses. The OG image resolves to https://sakthiram-r.github.io/sakthiram-portfolio/og.jpg.
+- The same asset QA passed on http://localhost:3000/ using unprefixed development URLs.
+- Existing scripts/qa.mjs passed at 1440, 390, 360 and 1920 pixels, with no overflow/errors and all reported interactions passing; reduced-motion content remained visible.
+- Verified using the local static preview with the exact repository subpath. Changes have not been pushed or deployed; the live GitHub Pages deployment was not changed in this session.

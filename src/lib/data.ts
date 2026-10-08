@@ -1,5 +1,7 @@
+import {asset} from './asset';
+
 export const PROFILE = {
- name: 'SAKTHIRAM R', firstName: 'Sakthiram', initials: 'SR', role: 'Web Developer', location: 'Coimbatore', email: 'sakthiramraju@gmail.com', linkedin: 'https://www.linkedin.com/in/sakthiram-r/', resume: '/Resume.pdf',
+ name: 'SAKTHIRAM R', firstName: 'Sakthiram', initials: 'SR', role: 'Web Developer', location: 'Coimbatore', email: 'sakthiramraju@gmail.com', linkedin: 'https://www.linkedin.com/in/sakthiram-r/', resume: asset('/Resume.pdf'),
  resumeSummary: 'Aspiring Full-Stack Web Developer skilled in React.js, Node.js, Django, and MongoDB. Experienced in building responsive and scalable web applications with a focus on performance and user experience. Eager to contribute to innovative development teams.',
  quote: 'Responsive and scalable web applications, with a focus on performance and user experience.',
 };

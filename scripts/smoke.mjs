@@ -1,3 +1,4 @@
+import {productionBasePath} from '../src/lib/base-path.mjs';
 import {chromium} from '@playwright/test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -5,10 +6,10 @@ const browser=await chromium.launch({channel:'chrome',headless:true});
 try{
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:3002',{waitUntil:'networkidle'});
+ await page.goto('http://127.0.0.1:3002'+productionBasePath+'/',{waitUntil:'networkidle'});
  await page.screenshot({path:'qa/390-top.png'});
  const desktop=await browser.newPage({viewport:{width:1440,height:900}});
- await desktop.goto('http://127.0.0.1:3002',{waitUntil:'networkidle'});
+ await desktop.goto('http://127.0.0.1:3002'+productionBasePath+'/',{waitUntil:'networkidle'});
  await desktop.screenshot({path:'qa/1440-top.png'});await desktop.close();
  const before=await page.locator('video').evaluate(v=>v.muted);
  await page.locator('.sound').tap({force:true});

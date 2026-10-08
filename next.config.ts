@@ -1,15 +1,12 @@
 import type { NextConfig } from 'next';
+import {basePath} from './src/lib/base-path.mjs';
 
 const config: NextConfig = {
   output: 'export',
 
-  basePath: process.env.NODE_ENV === 'production'
-    ? '/sakthiram-portfolio'
-    : '',
+  basePath,
 
-  assetPrefix: process.env.NODE_ENV === 'production'
-    ? '/sakthiram-portfolio/'
-    : '',
+  assetPrefix: basePath ? `${basePath}/` : '',
 
   distDir:
     process.env.NODE_ENV === 'development'
